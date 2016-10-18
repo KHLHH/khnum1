@@ -1,0 +1,9 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+includer.jsp, set value :<%=number %>
+<!--  jspf : 조각 파일. jsp 파일임 -->
+<p>
+	<%
+		String dataFolder="c:\\data";
+	%>
+</p>

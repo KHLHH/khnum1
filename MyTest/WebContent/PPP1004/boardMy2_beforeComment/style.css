@@ -1,0 +1,38 @@
+body, td, select, div, form, textarea, input {
+	font-size: 9pt;
+	color: black;
+	line-height: 160%;
+	font-family: ±¼¸²,verdana,tahoma;
+}
+
+
+textarea, input {
+	border : 1px solid #999999;
+	background-color : white;
+}
+
+.content, .content * {
+	word-wrap : break-word;
+	white-space: pre-wrap;
+	
+}
+
+
+
+.content-title, .list-header, .list-page {
+	font-weight: 900;
+	background : #80a0e6;
+}
+
+
+.content-title {
+	word-wrap : break-word;
+	white-space: pre-wrap;
+}
+
+
+a:link{text-decoration: none; color: #696969; }
+a:visited{text-decoration: none; color:#330066; }
+a:hover{text-decoration: yes; color: #66ccff !important; }
+
+

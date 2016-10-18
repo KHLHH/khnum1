@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+	<display-name>SepJSP</display-name>
+	<welcome-file-list>
+	  <welcome-file>index.html</welcome-file>
+	  <welcome-file>index.htm</welcome-file>
+	  <welcome-file>index.jsp</welcome-file>
+	  <welcome-file>default.html</welcome-file>
+	  <welcome-file>default.htm</welcome-file>
+	  <welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+	  <param-name>초기화파라미터이름</param-name>
+	  <param-value>초기화파라미터값</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>debugLevel</param-name>
+	  <param-value>5</param-value>
+	</context-param>
+  
+	<filter>
+	  <filter-name>Character Encoding Filter</filter-name>
+	  <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+	  <init-param>
+	    <param-name>encoding</param-name>
+	    <param-value>UTF-8</param-value>
+	  </init-param>
+	</filter>
+	<filter-mapping>
+	  <filter-name>Character Encoding Filter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+  
+ 	<!-- mvc.txt 이후의 web.xml 추가된 내용이다. -->
+  	
+  	<servlet>
+  		<servlet-name>SimpleController</servlet-name>
+  		<servlet-class>mvc.SimpleController</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+  		<servlet-name>SimpleController</servlet-name>
+  		<url-pattern>/simple</url-pattern>
+  	</servlet-mapping>
+  	
+	<servlet>
+		<servlet-name>ControllerUsingFile</servlet-name>
+		<servlet-class>mvc.controller.ControllerUsingFile</servlet-class>
+		<init-param>
+			<param-name>configFile</param-name>
+			<param-value>/WEB-INF/commandHandler.properties</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ControllerUsingFile</servlet-name>
+		<url-pattern>/controllerUsingFile</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 
+	U51011 - MVC 1st
+	<servlet>
+		<servlet-name>ControllerUsingURI</servlet-name>
+		<servlet-class>mvc.controller.ControllerUsingURI</servlet-class>
+		<init-param>
+			<param-name>configFile2</param-name>
+			<param-value>
+				/WEB-INF/commandHandlerURI.properties
+			</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ControllerUsingURI</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	 -->
+	
+	<!-- mvc.txt 패턴에서 추가된 web.xml내용은 종료가 된다. -->
+	
+	<servlet>
+		<servlet-name>ControllerUsingURI2</servlet-name>
+		<servlet-class>mvc.controller2.ControllerUsingURI</servlet-class>
+		<init-param>
+			<param-name>propertyConfig</param-name>
+			<param-value>
+				/WEB-INF/commandHandlerURI.properties
+			</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ControllerUsingURI2</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+  
+	<servlet>
+		<servlet-name>DBCPInit</servlet-name>
+		<servlet-class>mvjsp.jdbc.loader.DBCPInit</servlet-class>
+		<init-param>
+			<param-name>jdbcdriver</param-name>
+			<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 
+	<servlet>
+		<servlet-name>FileUploadServlet</servlet-name>
+		<servlet-class>pds.file.FileUploadServlet</servlet-class>
+		<multipart-config>
+			<location>D:\uploadTemp</location>
+			<file-size-threshold>102400</file-size-threshold>	
+		</multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileUploadServlet</servlet-name>
+		<url-pattern>/fileUpload</url-pattern>
+	</servlet-mapping>
+	 -->
+	
+	
+	
+    <servlet>
+        <servlet-name>tiles</servlet-name>
+        <servlet-class>org.apache.tiles.web.startup.TilesServlet</servlet-class>
+        <init-param>
+            <param-name>
+                org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG
+            </param-name>
+            <param-value>
+                /WEB-INF/tiles-hello.xml,/tiles/tiles-service.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet>
+    	<servlet-name>TilesDispatchServlet</servlet-name>
+    	<servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
+    </servlet>
+    
+   	<servlet-mapping>
+   		<servlet-name>TilesDispatchServlet</servlet-name>
+   		<url-pattern>*.tiles</url-pattern>
+   	</servlet-mapping>
+   	
+   	
+   	
+   	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/sitemesh/*</url-pattern>
+	</filter-mapping>
+
+   	
+  <!-- 
+  <servlet>
+    <servlet-name>now</servlet-name>
+    <servlet-class>day1.Now</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>now</servlet-name>
+    <url-pattern>/NowServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  <context-param>
+  	<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+  	<param-value>resource.message</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>javax.Servlet.jsp.jstl.fmt.timeZone</param-name>
+  	<param-value>Asia/Hongkong</param-value>
+  </context-param>
+   -->
+  
+  
+  <!-- 
+  <jsp-config>
+  	<taglib>
+  		<taglib-uri>/WEB-INF/tlds/el-functions.tld</taglib-uri>
+  		<taglib-location>/WEB-INF/tlds/el-functions.tld</taglib-location>
+  	</taglib>
+  	<jsp-property-group>
+  		<url-pattern>/chap15/oldversion/*</url-pattern>
+  		<el-ignored>true</el-ignored>
+  	</jsp-property-group>
+  </jsp-config>
+   -->
+  
+  
+  <!-- 
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>/chap07/view/*</url-pattern>
+      <include-prelude>/chap07/common/variable.jspf</include-prelude>
+      <include-coda>/chap07/common/footer.jspf</include-coda>
+    </jsp-property-group>
+  </jsp-config>
+    <context-param>
+        <param-name>Country</param-name>
+        <param-value>India</param-value>
+    </context-param>
+  
+  
+<servlet>
+	<servlet-name>DBCPInit</servlet-name>
+	<servlet-class>jdbc.loader.DBCPInit</servlet-class>
+	<init-param>
+		<param-name>jdbcdriver</param-name>
+		<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+	</init-param>
+	<load-on-startup>1</load-on-startup>
+</servlet>  -->
+
+</web-app>

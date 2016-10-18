@@ -1,0 +1,119 @@
+[table생성]
+create table MEMBER(
+   MEMBERID      VARCHAR2(10) NOT NULL PRIMARY KEY,
+   PASSWORD      VARCHAR2(10) NOT NULL,
+   NAME          VARCHAR2(20) NOT NULL,
+   EMAIL         VARCHAR2(80)
+);
+
+[pool.jocl]
+<object class="org.apache.commons.dbcp.PoolableConnectionFactory" 
+  xmlns="http://apache.org/xml/xmlns/jakarta/commons/jocl">
+
+ <object class="org.apache.commons.dbcp.DriverManagerConnectionFactory">
+  <string value="jdbc:oracle:thin:@localhost:1521:xe"/>
+  <string value="계정"/>
+  <string value="계정 비번"/>
+ </object>
+ 
+ <object class="org.apache.commons.pool.impl.GenericObjectPool">
+  <object class="org.apache.commons.pool.PoolableObjectFactory" null="true" />
+ </object>
+ 
+ <object class="org.apache.commons.pool.KeyedObjectPoolFactory" null="true"/>
+ 
+ <string null="true"/>
+ 
+ <boolean value="false"/>
+ 
+ <boolean value="true"/>
+</object>
+
+[DBCPInit.java]
+package jdbc.loader;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import java.util.StringTokenizer;
+
+public class DBCPInit extends HttpServlet {
+
+ public void init(ServletConfig config) throws ServletException {
+  try {
+   String drivers = config.getInitParameter("jdbcdriver");
+
+   StringTokenizer st = new StringTokenizer(drivers,",");
+   while (st.hasMoreTokens()) {
+    String jdbcDriver = st.nextToken();
+    Class.forName(jdbcDriver);//oracle드라이버 로딩
+   }
+   
+   Class.forName("org.apache.commons.dbcp.PoolingDriver");
+
+  } catch(Exception ex) {
+   throw new ServletException(ex);
+  }
+ }
+}
+
+[web.xml]
+<servlet>
+  <servlet-name>DBCPInit</servlet-name>
+  <servlet-class>jdbc.loader.DBCPInit</servlet-class>
+  <init-param>
+   <param-name>jdbcdriver</param-name>
+   <param-value>oracle.jdbc.driver.OracleDriver</param-value>
+  </init-param>
+  <load-on-startup>1</load-on-startup>
+</servlet>
+
+[viewMemberUsingPool.jsp]
+<%@ page contentType = "text/html; charset=euc-kr" %>
+<%@ page import = "java.sql.DriverManager" %>
+<%@ page import = "java.sql.Connection" %>
+<%@ page import = "java.sql.Statement" %>
+<%@ page import = "java.sql.ResultSet" %>
+<%@ page import = "java.sql.SQLException" %>
+<html>
+<head><title>회원 목록</title></head>
+<body>
+
+MEMBMER 테이블의 내용
+<table width="100%" border="1">
+<tr>
+    <td>이름</td><td>아이디</td><td>이메일</td>
+</tr>
+<%
+    
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+    
+    try {        
+        String query = "select * from MEMBER order by MEMBERID";
+        conn =
+DriverManager.getConnection(
+		"jdbc:apache:commons:dbcp:/pool");
+        stmt = conn.createStatement();
+        rs = stmt.executeQuery(query);
+        while(rs.next()) {
+%>
+<tr>
+    <td><%= rs.getString("NAME") %></td>
+    <td><%= rs.getString("MEMBERID") %></td>
+    <td><%= rs.getString("EMAIL") %></td>
+</tr>
+<%
+        }
+    } finally {
+        if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+        if (stmt != null) try { stmt.close(); } catch(SQLException ex) {}
+        if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+    }
+%>
+</table>
+
+
+</body>
+</html>

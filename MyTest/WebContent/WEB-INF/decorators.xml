@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+
+<decorators defaultdir="/decorator">
+	<decorator name="main" page="/sitemesh/decorator/hello_decorator.jsp">
+		<pattern>/sitemesh/hello.jsp</pattern>
+		<pattern>/sitemesh/hello/*</pattern>
+	</decorator>
+
+	<decorator name="news" page="/sitemesh/decorator2/news_decorator.jsp">
+		<pattern>/sitemesh/news/*</pattern>
+	</decorator>
+
+	<excludes>
+		<pattern>/sitemesh/hello/exclude.jsp</pattern>
+		<pattern>/sitemesh/news/exclude.jsp</pattern>
+	</excludes>
+</decorators>

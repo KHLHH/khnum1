@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+
+<decorators defaultdir="/decorator">
+	<decorator name="main" page="hello_decorator.jsp">
+		<pattern>/hello.jsp</pattern>
+		<pattern>/hello/*</pattern>
+	</decorator>
+
+	<decorator name="news" page="/decorator2/news_decorator.jsp">
+		<pattern>/news/*</pattern>
+	</decorator>
+
+	<excludes>
+		<pattern>/hello/exclude.jsp</pattern>
+		<pattern>/news/exclude.jsp</pattern>
+	</excludes>
+
+</decorators>
