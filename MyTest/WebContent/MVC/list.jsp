@@ -12,7 +12,7 @@
 </head>
 
 <body bgcolor="${bodyback_c}">
-<center><b>글목록(전체 글:${count})</b>
+<div><b>글목록(전체 글:${count})</b>
 <table width="700">
   <tr>
     <td align="right" bgcolor="${value_c}">
@@ -43,34 +43,34 @@
     </tr>
 
    <c:forEach var="article" items="${articleList}">
-   <tr height="30">
-    <td align="center"  width="50" >
-  <c:out value="${number}"/>
-  <c:set var="number" value="${number - 1}"/>
-</td>
-    <td  width="250" >
-  <c:if test="${article.re_level > 0}">
-  <img src="images/level.gif" width="${5 * article.re_level}" height="16">
-    <img src="images/re.gif">
-  </c:if>
-  <c:if test="${article.re_level == 0}">
-    <img src="images/level.gif" width="${5 * article.re_level}" height="16">
-  </c:if>
-          
-      <a href="/MVC_board/content.do?num=${article.num}&pageNum=${currentPage}">
-          ${article.subject}</a>
-          <c:if test="${article.readcount >= 20}">
-            <img src="images/hot.gif" border="0"  height="16">
-  </c:if>
-</td>
-    <td align="center"  width="100">
-       <a href="mailto:${article.email}">${article.writer}</a>
-</td>
-    <td align="center"  width="150">${article.reg_date}
-</td>
-    <td align="center"  width="50">${article.readcount}</td>
-    <td align="center" width="100" >${article.ip}</td>
-  </tr>
+	   <tr height="30">
+	    <td align="center"  width="50" >
+	  <c:out value="${number}"/>
+	  <c:set var="number" value="${number - 1}"/>
+	</td>
+	    <td  width="250" >
+	  <c:if test="${article.re_level > 0}">
+	  <img src="images/level.gif" width="${5 * article.re_level}" height="16">
+	    <img src="images/re.gif">
+	  </c:if>
+	  <c:if test="${article.re_level == 0}">
+	    <img src="images/level.gif" width="${5 * article.re_level}" height="16">
+	  </c:if>
+	          
+	      <a href="/MVC_board/content.do?num=${article.num}&pageNum=${currentPage}">
+	          ${article.subject}</a>
+	          <c:if test="${article.readcount >= 20}">
+	            <img src="images/hot.gif" border="0"  height="16">
+	  </c:if>
+	</td>
+	    <td align="center"  width="100">
+	       <a href="mailto:${article.email}">${article.writer}</a>
+	</td>
+	    <td align="center"  width="150">${article.reg_date}
+	</td>
+	    <td align="center"  width="50">${article.readcount}</td>
+	    <td align="center" width="100" >${article.ip}</td>
+	  </tr>
   </c:forEach>
 </table>
 </c:if>
@@ -98,6 +98,6 @@
    </c:if>
 </c:if>
 
-</center>
+</div>
 </body>
 </html>

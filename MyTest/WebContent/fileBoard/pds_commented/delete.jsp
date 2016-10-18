@@ -18,6 +18,7 @@
 System.out.println("#########"+request.getParameter("id") );
 int id = Integer.parseInt(request.getParameter("id") );
 
+// OldFileDelete for modifying
 PdsItem oldFile = GetPdsItemService.getInstance().getPdsItem(id);
 String oldFileName = new String(oldFile.getRealPath().getBytes("utf-8"), "iso-8859-1" );
 System.out.println(oldFileName);

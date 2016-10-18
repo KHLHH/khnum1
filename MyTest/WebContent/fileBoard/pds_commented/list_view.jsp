@@ -6,6 +6,7 @@
 <fmt:setLocale value="ko"/>
 
 <%
+// 다운로드 관련 설정 부분이다.
 response.setHeader("Pragma","No-cache");
 response.setHeader("Cache-Control","no-cache");
 response.setHeader("Cache-Control","no-store");
